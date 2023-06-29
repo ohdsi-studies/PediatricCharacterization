@@ -1,0 +1,40 @@
+{
+	"analysisList" : [
+		{
+			"name" : "Persons at Risk at Start of Year 2017-2019",
+			"targetIds" : [
+				566
+			],
+			"subgroupIds" : [
+				21,
+				22,
+				31,
+				32,
+				41,
+				42,
+				51,
+				52,
+				61,
+				62,
+				71,
+				72,
+				81,
+				82,
+				91,
+				92,
+				101,
+				102,
+				111,
+				112,
+				121,
+				122
+			],
+			"timeAtRiskIds" : [
+				1
+			],
+			"outcomeIds" : [
+				568
+			]
+		}
+	]
+}
