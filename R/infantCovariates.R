@@ -55,12 +55,12 @@ getDbInfantCovariateData <- function(connectionDetails = NULL,
 
   # Construct analysis reference:
   analysisRef <- rbind(
-    data.frame(analysisId = 10000,
+    data.frame(analysisId = 100000000000,
                analysisName = "Infant Age Group (NSCH)",
                domainId = "Demographics",
                isBinary = "Y",
                missingMeansZero = "Y"),
-    data.frame(analysisId = 20000,
+    data.frame(analysisId = 200000000000,
                analysisName = "Infant Age Group",
                domainId = "Demographics",
                isBinary = "Y",
