@@ -3,7 +3,7 @@
 # ##############################################################################
 
 # --- SETUP --------------------------------------------------------------------
-library(Covid19SubjectsAesiIncidenceRate)
+library(PediatricCharacterization)
 
 options(andromedaTempFolder = "D:/andromedaTemp")
 options(sqlRenderTempEmulationSchema = NULL)
@@ -52,7 +52,7 @@ cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = tempTable
 
 
 
-outputFolder <- "D:/StudyResults/2023/Covid19SubjectsAesiIncidenceRate/results"
+outputFolder <- "D:/StudyResults/2023/PediatricCharacterization/results"
 cdmDatabaseSchema <- dbList[[dbUp]]$cdmDatabaseSchema
 cohortDatabaseSchema <- paste0("scratch_", keyring::key_get(service = userNameService))
 cohortTablePrefix <- "aesi"
@@ -64,7 +64,7 @@ databaseDescription  = dbList[[dbUp]]$sourceName
 
 
 # --- EXECUTE ------------------------------------------------------------------
-Covid19SubjectsAesiIncidenceRate::execute(connectionDetails = connectionDetails,
+PediatricCharacterization::execute(connectionDetails = connectionDetails,
                                           outputFolder = outputFolder,
                                           cdmDatabaseSchema = cdmDatabaseSchema,
                                           cohortDatabaseSchema = cohortDatabaseSchema,
@@ -80,8 +80,8 @@ Covid19SubjectsAesiIncidenceRate::execute(connectionDetails = connectionDetails,
 # Upload the results to the OHDSI SFTP server:
 privateKeyFileName <- "<file>"
 userName <- "<name>"
-Covid19SubjectsAesiIncidenceRate::uploadDiagnosticsResults(file.path(outputFolder,"cohortDiagnostics"), privateKeyFileName, userName)
-Covid19SubjectsAesiIncidenceRate::uploadStudyResults(file.path(outputFolder, "incidenceRate"), privateKeyFileName, userName)
+PediatricCharacterization::uploadDiagnosticsResults(file.path(outputFolder,"cohortDiagnostics"), privateKeyFileName, userName)
+PediatricCharacterization::uploadStudyResults(file.path(outputFolder, "incidenceRate"), privateKeyFileName, userName)
 
 # --- VIEW COHORT DIAGNOSTICS --------------------------------------------------
 # If CohortDiagnostics has been run, you can call the RShiney viewer like this:

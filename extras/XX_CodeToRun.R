@@ -1,12 +1,12 @@
 # --- SETUP --------------------------------------------------------------------
 #keyring::key_set_with_value("redShiftPassword", password = "Rup@IsC00l!")
 #renv::deactivate()
-#remove.packages("Covid19SubjectsAesiIncidenceRate")
-#renv::purge("Covid19SubjectsAesiIncidenceRate")
-setwd("D:/Projects/Covid19SubjectsAesiIncidenceRate")
+#remove.packages("PediatricCharacterization")
+#renv::purge("PediatricCharacterization")
+setwd("D:/Projects/PediatricCharacterization")
 install.packages("renv")
-#download.file("https://raw.githubusercontent.com/ohdsi-studies/Covid19SubjectsAesiIncidenceRate/anaphylaxis/renv.lock", "renv.lock")
-download.file("https://raw.githubusercontent.com/ohdsi-studies/Covid19SubjectsAesiIncidenceRate/master/renv.lock", "renv.lock")
+#download.file("https://raw.githubusercontent.com/ohdsi-studies/PediatricCharacterization/anaphylaxis/renv.lock", "renv.lock")
+download.file("https://raw.githubusercontent.com/ohdsi-studies/PediatricCharacterization/master/renv.lock", "renv.lock")
 renv::init()
 renv::restore()
 library(PediatricCharacterization)
@@ -60,12 +60,12 @@ PediatricCharacterization::execute(connectionDetails = connectionDetails,
 # Upload the results to the OHDSI SFTP server:
 #privateKeyFileName <- "D:/keys/study-data-site-covid19aesi" #location and name of file
 #userName <- "study-data-site-covid19aesi"
-#Covid19SubjectsAesiIncidenceRate::uploadDiagnosticsResults(file.path(outputFolder,"cohortDiagnostics"), privateKeyFileName, userName)
-#Covid19SubjectsAesiIncidenceRate::uploadStudyResults(file.path(outputFolder, "incidenceRate"), privateKeyFileName, userName)
+#PediatricCharacterization::uploadDiagnosticsResults(file.path(outputFolder,"cohortDiagnostics"), privateKeyFileName, userName)
+#PediatricCharacterization::uploadStudyResults(file.path(outputFolder, "incidenceRate"), privateKeyFileName, userName)
 
 # --- VIEW COHORT DIAGNOSTICS --------------------------------------------------
 # If CohortDiagnostics has been run, you can call the RShiney viewer like this:
-# outputFolder <- "D:/Projects/Covid19SubjectsAesiIncidenceRate/results_UCCS_RS"
+# outputFolder <- "D:/Projects/PediatricCharacterization/results_UCCS_RS"
 # CohortDiagnostics::preMergeDiagnosticsFiles(file.path(outputFolder, "cohortDiagnostics"))
 # CohortDiagnostics::launchDiagnosticsExplorer(dataFolder = file.path(outputFolder,"cohortDiagnostics"))
 
