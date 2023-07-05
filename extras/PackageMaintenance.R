@@ -1,6 +1,6 @@
 # Copyright 2021 Observational Health Data Sciences and Informatics
 #
-# This file is part of Covid19SubjectsAesiIncidenceRate19SubjectsAesiIncidenceRate
+# This file is part of PediatricCharacterization19SubjectsAesiIncidenceRate
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 
 # CREATE LOCK FILE --------------------------------------------------------
 library(keyring)
-library(Covid19SubjectsAesiIncidenceRate)
+library(PediatricCharacterization)
 renv::deactivate()
-remove.packages("Covid19SubjectsAesiIncidenceRate")
-renv::purge("Covid19SubjectsAesiIncidenceRate")
-OhdsiRTools::createRenvLockFile(rootPackage = "Covid19SubjectsAesiIncidenceRate",
-                                additionalRequiredPackages = c("keyring", "Covid19SubjectsAesiIncidenceRate"),
+remove.packages("PediatricCharacterization")
+renv::purge("PediatricCharacterization")
+OhdsiRTools::createRenvLockFile(rootPackage = "PediatricCharacterization",
+                                additionalRequiredPackages = c("keyring", "PediatricCharacterization"),
                                 includeRootPackage = TRUE)
 #renv::update(packages = c("CohortDiagnostics"), library = "C:\\Users\\admin_evoss3\\Documents\\R\\win-library\\4.1")
 renv::restore()
@@ -29,17 +29,17 @@ renv::restore(packages = "CohortDiagnostics")
 
 # Format and check code ---------------------------------------------------
 # OhdsiRTools::formatRFolder()
-# OhdsiRTools::updatePackageNameFolder(packageName = "Covid19SubjectsAesiIncidenceRate",
+# OhdsiRTools::updatePackageNameFolder(packageName = "PediatricCharacterization",
 #                                      recursive = T)
-# OhdsiRTools::checkUsagePackage("Covid19SubjectsAesiIncidenceRate")
+# OhdsiRTools::checkUsagePackage("PediatricCharacterization")
 # OhdsiRTools::updateCopyrightYearFolder()
 # devtools::document()
 # Sys.setenv(JAVA_HOME = "")
 # devtools::check()
 
 # Create manual -----------------------------------------------------------
-# unlink("extras/Covid19SubjectsAesiIncidenceRate.pdf")
-# shell("R CMD Rd2pdf ./ --output=extras/Covid19SubjectsAesiIncidenceRate.pdf")
+# unlink("extras/PediatricCharacterization.pdf")
+# shell("R CMD Rd2pdf ./ --output=extras/PediatricCharacterization.pdf")
 #
 # pkgdown::build_site()
 
@@ -52,20 +52,20 @@ analysis1 <- list(name = "AESIs in COVID-19 subjects",
 
 analysisList <- list(analysisList = list(analysis1))
 analysisListJson <- RJSONIO::toJSON(analysisList, pretty = T)
-analysisListFile <- "D:/Git/GitHub/Covid19SubjectsAesiIncidenceRate/inst/settings/analysisSettings.json"
+analysisListFile <- "D:/Git/GitHub/PediatricCharacterization/inst/settings/analysisSettings.json"
 write(analysisListJson, file = analysisListFile)
 
 # Verify the analysis settings ---------------
 targetRef <- system.file("settings/targetRef.csv",
-                         package = "Covid19SubjectsAesiIncidenceRate",
+                         package = "PediatricCharacterization",
                          mustWork = TRUE)
-subgroupRef <- system.file("settings/subgroupRef.csv", package = "Covid19SubjectsAesiIncidenceRate",
+subgroupRef <- system.file("settings/subgroupRef.csv", package = "PediatricCharacterization",
   mustWork = TRUE)
 outcomeRef <- system.file("settings/outcomeRef.csv",
-                          package = "Covid19SubjectsAesiIncidenceRate",
+                          package = "PediatricCharacterization",
                           mustWork = TRUE)
 tarRef <- system.file("settings/timeAtRisk.csv",
-                      package = "Covid19SubjectsAesiIncidenceRate",
+                      package = "PediatricCharacterization",
                       mustWork = TRUE)
 
 targetCohort <- readr::read_csv(targetRef, col_types = readr::cols())
@@ -106,8 +106,8 @@ for (i in 1:length(analysisListFromFile$analysisList)) {
 
 
 # # Store environment in which the study was executed -----------------------
-# OhdsiRTools::insertEnvironmentSnapshotInPackage("Covid19SubjectsAesiIncidenceRate")
-# OhdsiRTools::createRenvLockFile(rootPackage = "Covid19SubjectsAesiIncidenceRate")
+# OhdsiRTools::insertEnvironmentSnapshotInPackage("PediatricCharacterization")
+# OhdsiRTools::createRenvLockFile(rootPackage = "PediatricCharacterization")
 #
 # # Check all files for UTF-8 Encoding and ensure there are no non-ASCII characters
 # OhdsiRTools::findNonAsciiStringsInFolder()
@@ -118,16 +118,16 @@ for (i in 1:length(analysisListFromFile$analysisList)) {
 # }
 #
 # # Create the Renv lock file
-# OhdsiRTools::createRenvLockFile("Covid19SubjectsAesiIncidenceRate",
+# OhdsiRTools::createRenvLockFile("PediatricCharacterization",
 #                                 additionalRequiredPackages = c("keyring",
 #   "DatabaseConnector", "dplyr", "ROhdsiWebApi", "stringr", "SqlRender", "tidyr", "plyr"))
 #
 # # Validate cohort SQL file names ------------
-# targetCohorts <- Covid19SubjectsAesiIncidenceRate::readCsv("settings/targetRef.csv")
+# targetCohorts <- PediatricCharacterization::readCsv("settings/targetRef.csv")
 # targetCohorts$cohortFolder <- "target"
-# subgroupCohorts <- Covid19SubjectsAesiIncidenceRate::readCsv("settings/subgroupRef.csv")
+# subgroupCohorts <- PediatricCharacterization::readCsv("settings/subgroupRef.csv")
 # subgroupCohorts$cohortFolder <- "subgroup"
-# outcomeCohorts <- Covid19SubjectsAesiIncidenceRate::readCsv("settings/outcomeRef.csv")
+# outcomeCohorts <- PediatricCharacterization::readCsv("settings/outcomeRef.csv")
 # outcomeCohorts$cohortFolder <- "outcome"
 # # Reformat the outcomeCohorts dataframe to match target/subgroup
 # outcomeCohortsReformatted <- outcomeCohorts[, c("outcomeId",
@@ -139,7 +139,7 @@ for (i in 1:length(analysisListFromFile$analysisList)) {
 #
 # # Obtain the list of SQL files in the list
 # packageSqlFiles <- list.files(system.file(file.path("sql/sql_server/"),
-#                                           package = "Covid19SubjectsAesiIncidenceRate"),
+#                                           package = "PediatricCharacterization"),
 #   recursive = TRUE)
 #
 # for (i in 1:nrow(allCohorts)) {

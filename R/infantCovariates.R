@@ -19,18 +19,18 @@ createInfantCovariateSettings <- function(useDemographicsInfantAgeGroup = TRUE,
 }
 
 
-getDbInfantCovariateData <-function(connectionDetails = NULL,
-                                    connection = NULL,
-                                    oracleTempSchema = NULL,
-                                    cdmDatabaseSchema,
-                                    cdmVersion = "5",
-                                    cohortTable = "cohort",
-                                    cohortDatabaseSchema = cdmDatabaseSchema,
-                                    cohortTableIsTemp = FALSE,
-                                    cohortId = -1,
-                                    rowIdField = "subject_id",
-                                    covariateSettings,
-                                    aggregated = FALSE) {
+getDbInfantCovariateData <- function(connectionDetails = NULL,
+                                     connection = NULL,
+                                     oracleTempSchema = NULL,
+                                     cdmDatabaseSchema,
+                                     cdmVersion = "5",
+                                     cohortTable = "cohort",
+                                     cohortDatabaseSchema = cdmDatabaseSchema,
+                                     cohortTableIsTemp = FALSE,
+                                     cohortId = -1,
+                                     rowIdField = "subject_id",
+                                     covariateSettings,
+                                     aggregated = FALSE) {
 
   if (is.null(connection) & is.null(connectionDetails))
     stop("Must specify connection")
@@ -51,7 +51,7 @@ getDbInfantCovariateData <-function(connectionDetails = NULL,
   }
 
   # Construct covariate reference:
-  covariateRef <- read.csv(system.file("settings/AgeGroupCovariates.csv", package = "PedatricCharacterization"))
+  covariateRef <- read.csv(system.file("settings/AgeGroupCovariates.csv", package = "PediatricCharacterization"))
 
   # Construct analysis reference:
   analysisRef <- rbind(
@@ -71,14 +71,14 @@ getDbInfantCovariateData <-function(connectionDetails = NULL,
   result <- Andromeda::andromeda(covariateRef = covariateRef,
                                  analysisRef = analysisRef)
 
-  sql <- SqlRender::loadRenderTranslateSql(sqlFileName = "DemographicsInfantAge.sql",
+  sql <- SqlRender::loadRenderTranslateSql(sqlFilename = "DemographicsInfantAge.sql",
                                            packageName = "PediatricCharacterization",
                                            dbms = DatabaseConnector::dbms(connection),
-                           cohort_table = cohortTable,
-                           use_infant_age_nsch = covariateSettings$DemographicsInfantAgeGroupNsch,
-                           use_infant_age = covariateSettings$DemographicsInfantAgeGroup,
-                           temporal = covariateSettings$temporal,
-                           cdm_database_schema = cdmDatabaseSchema)
+                                           cohort_table = cohortTable,
+                                           use_infant_age_nsch = covariateSettings$DemographicsInfantAgeGroupNsch,
+                                           use_infant_age = covariateSettings$DemographicsInfantAgeGroup,
+                                           temporal = covariateSettings$temporal,
+                                           cdm_database_schema = cdmDatabaseSchema)
 
   DatabaseConnector::executeSql(connection = connection, sql = sql)
 
