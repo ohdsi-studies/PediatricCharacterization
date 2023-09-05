@@ -1,0 +1,62 @@
+{
+  "targetDefs": [
+    {
+      "id": 8334,
+      "name": "At risk, 2016+"
+    }
+  ],
+  "outcomeDefs": [
+    {
+      "id": 1,
+      "name": "Autism",
+      "cohortId": 3417,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 2,
+      "name": "Ulcerative Colitis",
+      "cohortId": 10606,
+      "cleanWindow": 9999
+    }
+  ],
+  "timeAtRiskDefs": [
+    {
+      "id": 1,
+      "start": {
+        "dateField": "start",
+        "offset": 0
+      },
+      "end": {
+        "dateField": "start",
+        "offset": 9999
+      }
+    }
+  ],
+  "analysisList": [
+    {
+      "targets": [
+        8334
+      ],
+      "outcomes": [
+        1,
+        2
+      ],
+      "tars": [
+        1
+      ]
+    }
+  ],
+  "strataSettings": {
+    "byAge": true,
+    "byGender": true,
+    "byYear": true,
+    "ageBreaks": [
+      2,
+      5,
+      12,
+      18,
+      34,
+      65
+    ]
+  }
+}

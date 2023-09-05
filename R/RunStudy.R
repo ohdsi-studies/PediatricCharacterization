@@ -1,6 +1,6 @@
 # Copyright 2021 Observational Health Data Sciences and Informatics
 #
-# This file is part of Covid19SubjectsAesiIncidenceRate19SubjectsAesiIncidenceRate
+# This file is part of PediatricCharacterization
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
 # limitations under the License.
 #'
 #' @export
-runIR <- function(connectionDetails = NULL,
-                     connection = NULL,
+runIR <- function(connectionDetails = connectionDetails,
+                     connection = connection,
                      cdmDatabaseSchema,
                      tempEmulationSchema = NULL,
                      cohortDatabaseSchema,
-                     cohortTablePrefix = "aesi",
+                     cohortTablePrefix = "pedChar",
                      targetCohortTable = paste0(cohortTablePrefix, "_target"),
                      targetRefTable = paste0(cohortTablePrefix, "_target_ref"),
                      subgroupCohortTable = paste0(cohortTablePrefix, "_subgroup"),
@@ -84,6 +84,9 @@ runIR <- function(connectionDetails = NULL,
                                     databaseName,
                                     summaryTable,
                                     minCellCount)
+
+
+
 
 
   # Save database metadata ---------------------------------------------------------------
@@ -158,93 +161,158 @@ computeAndExportIncidenceAnalysis <- function(connection,
   ParallelLogger::logInfo("----------------------------------------------------------")
   ParallelLogger::logInfo("  ---- Creating summary table  ---- ")
   ParallelLogger::logInfo("----------------------------------------------------------")
-  createIRSummaryTableSql <- SqlRender::loadRenderTranslateSql("createIRSummaryTable.sql",
-                                                          packageName = getThisPackageName(),
-                                                          dbms = connection@dbms,
-                                                          tempEmulationSchema = tempEmulationSchema,
-                                                          warnOnMissingParameters = TRUE,
-                                                          cohort_database_schema = cohortDatabaseSchema,
-                                                          summary_table = summaryTable)
-  DatabaseConnector::executeSql(connection = connection,
-                                sql = createIRSummaryTableSql,
-                                progressBar = TRUE,
-                                reportOverallTime = TRUE)
+  # createIRSummaryTableSql <- SqlRender::loadRenderTranslateSql("createIRSummaryTable.sql", #this creates an empty IR results table, may not be needed
+  #                                                         packageName = getThisPackageName(),
+  #                                                         dbms = connection@dbms,
+  #                                                         tempEmulationSchema = tempEmulationSchema,
+  #                                                         warnOnMissingParameters = TRUE,
+  #                                                         cohort_database_schema = cohortDatabaseSchema,
+  #                                                         summary_table = summaryTable)
+  # DatabaseConnector::executeSql(connection = connection,
+  #                               sql = createIRSummaryTableSql,
+  #                               progressBar = TRUE,
+  #                               reportOverallTime = TRUE)
 
-  # Run the analyses as specified in the settings/analysisSettings.json file
-  analysisListFile <- system.file("settings/analysisSettings.json",
-                                  package = getThisPackageName(),
-                                  mustWork = TRUE)
-  analysisListJsonFromFile <- paste(readLines(analysisListFile), collapse = "\n")
-  analysisList <- RJSONIO::fromJSON(analysisListJsonFromFile)
+  # Run the analyses as specified in the settings/irDesign.json file
+  # list.files(path = system.file("D://Git/2023/PediatricCharacterization/inst/settings/"), full.names = TRUE)
+  #
+  # analysisListFile <- system.file("D:/Git/2023/PediatricCharacterization/inst/settings/irDesign.json",
+  #                                 package = getThisPackageName(),
+  #                                 mustWork = TRUE)
+  # analysisListFile <- file.path('inst/settings/irDesign.json')
+  #
+  # analysisListJsonFromFile <- paste(readLines(analysisListFile), collapse = "\n")
+  # analysisList <- RJSONIO::fromJSON(analysisListJsonFromFile)
+  #
+  #
+  # for (i in 1:length(analysisList$analysisList)) {
+  #   ParallelLogger::logInfo(paste0("(",
+  #                                  i,
+  #                                  "/",
+  #                                  length(analysisList$analysisList),
+  #                                  "): ",
+  #                                  analysisList$analysisList[[i]]$name))
+  #   targetIds <- analysisList$analysisList[[i]]$targetIds
+  #   subgroupIds <- analysisList$analysisList[[i]]$subgroupIds
+  #   timeAtRiskIds <- analysisList$analysisList[[i]]$timeAtRiskIds
+  #   outcomeIds <- analysisList$analysisList[[i]]$outcomeIds
+
+  irDesign <-readr::read_file(file=file.path('inst/settings/irDesign.json') )
+  #test <- IncidenceDesign$new(data=irDesign)
 
 
-  for (i in 1:length(analysisList$analysisList)) {
-    ParallelLogger::logInfo(paste0("(",
-                                   i,
-                                   "/",
-                                   length(analysisList$analysisList),
-                                   "): ",
-                                   analysisList$analysisList[[i]]$name))
-    targetIds <- analysisList$analysisList[[i]]$targetIds
-    subgroupIds <- analysisList$analysisList[[i]]$subgroupIds
-    timeAtRiskIds <- analysisList$analysisList[[i]]$timeAtRiskIds
-    outcomeIds <- analysisList$analysisList[[i]]$outcomeIds
+  analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(irDesign),
+                                             buildOptions = CohortIncidence::buildOptions())
+
+  baseUrl <- Sys.getenv("baseUrl") #these should be specified in XX_CodeToRun.R
+
+ # resultsFolder <- file.path(exportFolder, "Results/Incidence") #these should be specified in XX_CodeToRun.R
+
+  cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
+    settingsFileName = file.path(
+      packageRoot, "inst/settings/CohortsToCreate.csv"
+    ),
+    jsonFolder = file.path(packageRoot, "inst/cohorts"),
+    sqlFolder = file.path(packageRoot, "inst/sql/sql_server")
+  )
+  tempTable <- paste0(projectName, "_cohort_table_", cdmDatabaseSchema) #this will hold all the cohorts for all the runs
+  cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = tempTable)
+
+  cdm_incrementalFolder <- file.path(outFolder,
+                                     'incrementalFolder')
+
+  CohortGenerator::createCohortTables(connectionDetails = connectionDetails, #this is creating the cohorts
+                                      cohortTableNames = cohortTableNames,
+                                      cohortDatabaseSchema = cohortDatabaseSchema,
+                                      incremental = TRUE)
+
+  cohortsGenerated <- CohortGenerator::generateCohortSet(connectionDetails = connectionDetails,
+                                                         cdmDatabaseSchema = cdmDatabaseSchema,
+                                                         cohortDatabaseSchema = cohortDatabaseSchema,
+                                                         cohortTableNames = cohortTableNames,
+                                                         cohortDefinitionSet = cohortDefinitionSet,
+                                                         incrementalFolder = cdm_incrementalFolder,
+                                                         incremental = TRUE)
+
+  cohortTable <- tempTable #come back to this line may need to create this variable diff
+
+  tempTable <- paste0(projectName, "_cohort_table_", cdmDatabaseSchema) #this will hold all the cohorts for all the runs
+  cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = tempTable)
+
+  buildOptions <- CohortIncidence::buildOptions(cohortTable =  paste0(cohortDatabaseSchema,'.',cohortTableNames$cohortTable),
+                                                cdmDatabaseSchema = cdmDatabaseSchema,
+                                                sourceName = sourceName,
+                                                refId = 1)
+
+  executeResults <- CohortIncidence::executeAnalysis(connectionDetails = connectionDetails,
+                                                     incidenceDesign = test,
+                                                     buildOptions = buildOptions)
+
+  #outFolder <- file.path(resultsFolder, dbList[[dbUp]]$sourceKey)
 
 
-    runIncidenceAnalysisSql <- SqlRender::loadRenderTranslateSql("runIncidenceAnalysis.sql",
-                                                                 packageName = getThisPackageName(),
-                                                                 dbms = connection@dbms,
-                                                                 tempEmulationSchema = tempEmulationSchema,
-                                                                 warnOnMissingParameters = TRUE,
-                                                                 cdm_database_schema = cdmDatabaseSchema,
-                                                                 cohort_database_schema = cohortDatabaseSchema,
-                                                                 target_cohort_table = targetCohortTable,
-                                                                 target_ref_table = targetRefTable,
-                                                                 target_ids = targetIds,
-                                                                 subgroup_cohort_table = subgroupCohortTable,
-                                                                 subgroup_ref_table = subgroupRefTable,
-                                                                 subgroup_ids = subgroupIds,
-                                                                 outcome_cohort_table = outcomeCohortTable,
-                                                                 outcome_ref_table = outcomeRefTable,
-                                                                 outcome_ids = outcomeIds,
-                                                                 time_at_risk_table = timeAtRiskTable,
-                                                                 time_at_risk_ids = timeAtRiskIds,
-                                                                 database_name = databaseName,
-                                                                 summary_table = summaryTable)
-    DatabaseConnector::executeSql(connection = connection,
-                                  sql = runIncidenceAnalysisSql,
-                                  progressBar = TRUE,
-                                  reportOverallTime = TRUE)
-  }
+
+  write.csv(executeResults, paste(path=file.path(exportFolder), "/", db$sourceKey, "_results.csv", sep=""), row.names = F)
+
+  # build options
+
+
+    # runIncidenceAnalysisSql <- SqlRender::loadRenderTranslateSql("runIncidenceAnalysis.sql",
+    #                                                              packageName = getThisPackageName(),
+    #                                                              dbms = connection@dbms,
+    #                                                              tempEmulationSchema = tempEmulationSchema,
+    #                                                              warnOnMissingParameters = TRUE,
+    #                                                              cdm_database_schema = cdmDatabaseSchema,
+    #                                                              cohort_database_schema = cohortDatabaseSchema,
+    #                                                              target_cohort_table = targetCohortTable,
+    #                                                              target_ref_table = targetRefTable,
+    #                                                              target_ids = targetIds,
+    #                                                              subgroup_cohort_table = subgroupCohortTable,
+    #                                                              subgroup_ref_table = subgroupRefTable,
+    #                                                              subgroup_ids = subgroupIds,
+    #                                                              outcome_cohort_table = outcomeCohortTable,
+    #                                                              outcome_ref_table = outcomeRefTable,
+    #                                                              outcome_ids = outcomeIds,
+    #                                                              time_at_risk_table = timeAtRiskTable,
+    #                                                              time_at_risk_ids = timeAtRiskIds,
+    #                                                              database_name = databaseName,
+    #                                                              summary_table = summaryTable)
+#     DatabaseConnector::executeSql(connection = connection,
+#                                   sql = runIncidenceAnalysisSql,
+#                                   progressBar = TRUE,
+#                                   reportOverallTime = TRUE)
+ }
+
+
 
   # Export & Censor results
-  ParallelLogger::logInfo("Exporting analysis results")
-  getIncidenceAnalysisSql <- SqlRender::loadRenderTranslateSql("GetIncidenceAnalysisResults.sql",
-                                                               packageName = getThisPackageName(),
-                                                               dbms = connection@dbms,
-                                                               tempEmulationSchema = tempEmulationSchema,
-                                                               warnOnMissingParameters = TRUE,
-                                                               cohort_database_schema = cohortDatabaseSchema,
-                                                               summary_table = summaryTable)
+  # ParallelLogger::logInfo("Exporting analysis results")
+  # getIncidenceAnalysisSql <- SqlRender::loadRenderTranslateSql("GetIncidenceAnalysisResults.sql",
+  #                                                              packageName = getThisPackageName(),
+  #                                                              dbms = connection@dbms,
+  #                                                              tempEmulationSchema = tempEmulationSchema,
+  #                                                              warnOnMissingParameters = TRUE,
+  #                                                              cohort_database_schema = cohortDatabaseSchema,
+  #                                                              summary_table = summaryTable)
 
-  results <- DatabaseConnector::querySql(connection = connection,
-                                         sql = getIncidenceAnalysisSql,
-                                         snakeCaseToCamelCase = TRUE)
+  # results <- DatabaseConnector::querySql(connection = connection,
+  #                                        sql = getIncidenceAnalysisSql,
+  #                                        snakeCaseToCamelCase = TRUE)
 
   # Censor the results
-  ParallelLogger::logInfo("Censoring results")
-  fieldsToCensor <- c("numPersonsWOutcomePreExclude",
-                      "numPersonsWOutcome",
-                      "numOutcomesPreExclude",
-                      "numOutcomes",
-                      "numPersonsPreExclude",
-                      "numPersonsAtRisk")
-  for (i in 1:length(fieldsToCensor)) {
-    results <- enforceMinCellValue(results, fieldsToCensor[i], minCellCount)
-  }
-
-  writeToCsv(results, file.path(exportFolder, "incidence_analysis.csv"))
-}
+  # ParallelLogger::logInfo("Censoring results")
+  # fieldsToCensor <- c("numPersonsWOutcomePreExclude",
+  #                     "numPersonsWOutcome",
+  #                     "numOutcomesPreExclude",
+  #                     "numOutcomes",
+  #                     "numPersonsPreExclude",
+  #                     "numPersonsAtRisk")
+  # for (i in 1:length(fieldsToCensor)) {
+  #   results <- enforceMinCellValue(results, fieldsToCensor[i], minCellCount)
+  # }
+  #
+  # writeToCsv(results, file.path(exportFolder, "incidence_analysis.csv"))
+#}
 
 #' @export
 insertRefEntries <- function(connection,

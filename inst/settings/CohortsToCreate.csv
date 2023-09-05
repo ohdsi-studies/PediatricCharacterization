@@ -1,2 +1,8 @@
-atlasId,cohortId,id,cohortName
-568,568,568,Anaphylaxis v2.0
+atlas_id,cohort_id,cohort_name,logic_description,generate_stats
+10606,10606,[PL] Earliest event of Ulcerative colitis,"source: 5803;
+hashTag: #ASSURE, #Indication, #ASSURE-Indication;
+submitter: Joel Swerdel;
+logic: Earliest occurrence of Ulcerative Colitis indexed on diagnosis date, for the first time in history; cohort exit is the end of continuous observation;",FALSE
+3417,3417,[PL] Earliest event of Autism,"hashTag: #2021;
+logic: First occurrence Autism spectrum disorder indexed on diagnosis date; cohort exit is the end of continuous observation.",FALSE
+8334,8334,[COVID AESI] persons at risk at start of year 2017-2019 with 365d prior observation,NA,FALSE

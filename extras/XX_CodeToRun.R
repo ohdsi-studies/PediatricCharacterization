@@ -3,7 +3,7 @@
 #renv::deactivate()
 #remove.packages("PediatricCharacterization")
 #renv::purge("PediatricCharacterization")
-setwd("D:/Projects/PediatricCharacterization")
+setwd("D:/StudyResults/2023/PediatricCharacterization")
 install.packages("renv")
 #download.file("https://raw.githubusercontent.com/ohdsi-studies/PediatricCharacterization/anaphylaxis/renv.lock", "renv.lock")
 download.file("https://raw.githubusercontent.com/ohdsi-studies/PediatricCharacterization/master/renv.lock", "renv.lock")
@@ -13,7 +13,11 @@ library(PediatricCharacterization)
 
 
 # --- CHOOSE DB ----------------------------------------------------------------
-databases <- read.csv("XX_databases.csv",header=TRUE)
+
+outputFolder <- "D:/Git/2023/PediatricCharacterization" #D:\Git\2023\PediatricCharacterization\inst\settings
+databases <- read.csv(file.path(outputFolder, "XX_databases.csv"))
+# CohortDiagnostics::preMergeDiagnosticsFiles(file.path(outputFolder, "cohortDiagnostics"))
+#databases <- read.csv("XX_databases.csv",header=TRUE)
 database <- databases[1,]
 #DONE:  #1,2,3
 
@@ -42,6 +46,7 @@ databaseId <- database$databaseId
 databaseName <- database$databaseName
 databaseDescription <- database$databaseDescription
 
+
 # --- EXECUTE ------------------------------------------------------------------
 PediatricCharacterization::execute(connectionDetails = connectionDetails,
                                           outputFolder = outputFolder,
@@ -52,8 +57,8 @@ PediatricCharacterization::execute(connectionDetails = connectionDetails,
                                           databaseId = databaseId,
                                           databaseName = databaseName,
                                           createCohortsAndRef = TRUE,
-                                          runCohortDiagnostics = TRUE,
-                                          runIR = FALSE,
+                                          runCohortDiagnostics = FALSE,
+                                          runIR = TRUE,
                                           minCellCount = 5)
 
 # --- SHARE RESULTS ------------------------------------------------------------
@@ -85,4 +90,71 @@ CohortDiagnostics::createDiagnosticsExplorerZip(outputZipfile = file.path(folder
 
 CohortDiagnostics::launchDiagnosticsExplorer(overwritePublishDir = TRUE, makePublishable=TRUE,
                                              sqliteDbPath = file.path(folder, "MergedCohortDiagnosticsData.sqlite"))
+
+###############################################################################################################################
+#----PULL BACK cohortIds and use cohortgenerator to save them as jsons etc------------------------------------------------
+###############################################################################################################################
+#ADHD	10640; type 2 diabetes mellitus	10647; urinary tract infections	12396; anaphylaxis 10659; migraine	12468
+#epilepsy	12403; Crohn’s disease	10616; ulcerative colitis	10606; chronic lymphocytic leukemia	10642; autism spectrum disorder	3417
+#major depressive disorder	10628; Multiple Sclerosis	10641	psoriasis	10626	(plaque)
+
+cohorts <- c(10640, 10647, 10616, 10647, 12396, 10659, 12468, 12403, 10616, 10606, 10642, 3417, 10628, 10641, 10626, 8334)
+cohorts <- c(10606, 3417, 8334)
+
+baseUrl <- "https://epi.jnj.com:8443/WebAPI"
+ROhdsiWebApi::authorizeWebApi(baseUrl, "windows") # Windows
+cohortDefinitionSet <- ROhdsiWebApi::exportCohortDefinitionSet(baseUrl = baseUrl,cohortIds = cohorts)
+
+packageRoot <- file.path('D:/Git/2023/PediatricCharacterization')
+
+#save off cohorts
+
+CohortGenerator::saveCohortDefinitionSet(
+  cohortDefinitionSet = cohortDefinitionSet,
+  settingsFileName = file.path(
+    packageRoot,
+    "inst/settings/CohortsToCreate.csv"
+  ),
+  jsonFolder = file.path(
+    packageRoot,
+    "inst/cohorts"
+  ),
+  sqlFolder = file.path(
+    packageRoot,
+    "inst/sql/sql_server"
+  )
+)
+
+#for DPs use this
+cohortDefinitionSet <- getCohortDefinitionSet(
+  settingsFileName = file.path(
+    packageRoot, "inst/settings/CohortsToCreate.csv"
+  ),
+  jsonFolder = file.path(packageRoot, "inst/cohorts"),
+  sqlFolder = file.path(packageRoot, "inst/sql/sql_server")
+)
+
+
+
+cohortsToCreate <- CohortGenerator::createEmptyCohortDefinitionSet()
+
+# Fill the cohort set using  cohorts included in this
+# package as an example
+cohortJsonFiles <- list.files(path = system.file("testdata/name/cohorts", package = "CohortGenerator"), full.names = TRUE)
+for (i in 1:length(cohortJsonFiles)) {
+  cohortJsonFileName <- cohortJsonFiles[i]
+  cohortName <- tools::file_path_sans_ext(basename(cohortJsonFileName))
+  # Here we read in the JSON in order to create the SQL
+  # using [CirceR](https://ohdsi.github.io/CirceR/)
+  # If you have your JSON and SQL stored differenly, you can
+  # modify this to read your JSON/SQL files however you require
+  cohortJson <- readChar(cohortJsonFileName, file.info(cohortJsonFileName)$size)
+  cohortExpression <- CirceR::cohortExpressionFromJson(cohortJson)
+  cohortSql <- CirceR::buildCohortQuery(cohortExpression, options = CirceR::createGenerateOptions(generateStats = FALSE))
+  cohortsToCreate <- rbind(cohortsToCreate, data.frame(cohortId = i,
+                                                       cohortName = cohortName,
+                                                       sql = cohortSql,
+                                                       stringsAsFactors = FALSE))
+}
+
 

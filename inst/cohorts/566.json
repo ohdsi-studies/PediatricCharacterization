@@ -25,6 +25,30 @@
             "EndDate": "2019-01-01"
           }
         }
+      },
+       {
+        "ObservationPeriod": {
+          "UserDefinedPeriod": {
+            "StartDate": "2020-01-01",
+            "EndDate": "2020-01-01"
+          }
+        }
+      },
+       {
+        "ObservationPeriod": {
+          "UserDefinedPeriod": {
+            "StartDate": "2021-01-01",
+            "EndDate": "2021-01-01"
+          }
+        }
+      },
+       {
+        "ObservationPeriod": {
+          "UserDefinedPeriod": {
+            "StartDate": "2022-01-01",
+            "EndDate": "2022-01-01"
+          }
+        }
       }
     ],
     "ObservationWindow": {
