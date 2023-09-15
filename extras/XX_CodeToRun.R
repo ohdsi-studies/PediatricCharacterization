@@ -3,7 +3,7 @@
 #renv::deactivate()
 #remove.packages("PediatricCharacterization")
 #renv::purge("PediatricCharacterization")
-setwd("D:/StudyResults/2023/PediatricCharacterization")
+#setwd("D:/StudyResults/2023/PediatricCharacterization")
 install.packages("renv")
 #download.file("https://raw.githubusercontent.com/ohdsi-studies/PediatricCharacterization/anaphylaxis/renv.lock", "renv.lock")
 download.file("https://raw.githubusercontent.com/ohdsi-studies/PediatricCharacterization/master/renv.lock", "renv.lock")
@@ -14,8 +14,10 @@ library(PediatricCharacterization)
 
 # --- CHOOSE DB ----------------------------------------------------------------
 
-outputFolder <- "D:/Git/2023/PediatricCharacterization" #D:\Git\2023\PediatricCharacterization\inst\settings
-databases <- read.csv(file.path(outputFolder, "XX_databases.csv"))
+# outputFolder <- getwd() #D:\Git\2023\PediatricCharacterization\inst\settings
+packageRoot <- getwd()
+projectName = 'PediatricCharacterization'
+databases <- read.csv(file.path(packageRoot, "XX_databases.csv"))
 # CohortDiagnostics::preMergeDiagnosticsFiles(file.path(outputFolder, "cohortDiagnostics"))
 #databases <- read.csv("XX_databases.csv",header=TRUE)
 database <- databases[1,]
@@ -35,7 +37,7 @@ connectionDetails <-
                                              port = 5439,
                                              extraSettings = "ssl=true&sslfactory=com.amazon.redshift.ssl.NonValidatingFactory")
 
-connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
+ #connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
 
 outputFolder <- database$outputFolder
 cdmDatabaseSchema <- database$cdmDatabaseSchema
@@ -45,6 +47,8 @@ cohortTable <- database$cohortTable
 databaseId <- database$databaseId
 databaseName <- database$databaseName
 databaseDescription <- database$databaseDescription
+
+
 
 
 # --- EXECUTE ------------------------------------------------------------------
@@ -105,7 +109,7 @@ baseUrl <- "https://epi.jnj.com:8443/WebAPI"
 ROhdsiWebApi::authorizeWebApi(baseUrl, "windows") # Windows
 cohortDefinitionSet <- ROhdsiWebApi::exportCohortDefinitionSet(baseUrl = baseUrl,cohortIds = cohorts)
 
-packageRoot <- file.path('D:/Git/2023/PediatricCharacterization')
+
 
 #save off cohorts
 

@@ -15,12 +15,12 @@
 # limitations under the License.
 #'
 #' @export
-runIR <- function(connectionDetails = connectionDetails,
-                     connection = connection,
+runIR <- function(connectionDetails = NULL, #we changed this to null on 9/11
+                     connection = NULL, #we changed this to null on 9/11
                      cdmDatabaseSchema,
                      tempEmulationSchema = NULL,
                      cohortDatabaseSchema,
-                     cohortTablePrefix = "pedChar",
+                     cohortTablePrefix = cohortTablePrefix,
                      targetCohortTable = paste0(cohortTablePrefix, "_target"),
                      targetRefTable = paste0(cohortTablePrefix, "_target_ref"),
                      subgroupCohortTable = paste0(cohortTablePrefix, "_subgroup"),
@@ -60,6 +60,8 @@ runIR <- function(connectionDetails = connectionDetails,
     dir.create(getOption("andromedaTempFolder"), recursive = TRUE)
   }
 
+
+
   if (is.null(connection)) {
     connection <- DatabaseConnector::connect(connectionDetails)
     on.exit(DatabaseConnector::disconnect(connection))
@@ -70,7 +72,7 @@ runIR <- function(connectionDetails = connectionDetails,
   ParallelLogger::logInfo("  ---- Computing & Export Incidence Analysis ---- ")
   ParallelLogger::logInfo("----------------------------------------------------------")
   computeAndExportIncidenceAnalysis(connection,
-                                    exportFolder,
+                                    exportFolder=exportFolder,
                                     tempEmulationSchema,
                                     cdmDatabaseSchema,
                                     cohortDatabaseSchema,
@@ -204,55 +206,55 @@ computeAndExportIncidenceAnalysis <- function(connection,
   analysisSql <- CohortIncidence::buildQuery(incidenceDesign =  as.character(irDesign),
                                              buildOptions = CohortIncidence::buildOptions())
 
-  baseUrl <- Sys.getenv("baseUrl") #these should be specified in XX_CodeToRun.R
+  # baseUrl <- Sys.getenv("baseUrl") #these should be specified in XX_CodeToRun.R
 
  # resultsFolder <- file.path(exportFolder, "Results/Incidence") #these should be specified in XX_CodeToRun.R
 
-  cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
-    settingsFileName = file.path(
-      packageRoot, "inst/settings/CohortsToCreate.csv"
-    ),
-    jsonFolder = file.path(packageRoot, "inst/cohorts"),
-    sqlFolder = file.path(packageRoot, "inst/sql/sql_server")
-  )
-  tempTable <- paste0(projectName, "_cohort_table_", cdmDatabaseSchema) #this will hold all the cohorts for all the runs
-  cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = tempTable)
+  # cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
+  #   settingsFileName = file.path(
+  #     packageRoot, "inst/settings/CohortsToCreate.csv"
+  #   ),
+  #   jsonFolder = file.path(packageRoot, "inst/cohorts"),
+  #   sqlFolder = file.path(packageRoot, "inst/sql/sql_server")
+  # )
+  # tempTable <- paste0(projectName, "_cohort_table_", cdmDatabaseSchema) #this will hold all the cohorts for all the runs
+  # cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = tempTable)
+  #
+  # cdm_incrementalFolder <- file.path(outputFolder,
+  #                                    'incrementalFolder')
+  #
+  # CohortGenerator::createCohortTables(connectionDetails = connectionDetails, #this is creating the cohorts
+  #                                     cohortTableNames = cohortTableNames,
+  #                                     cohortDatabaseSchema = cohortDatabaseSchema,
+  #                                     incremental = TRUE)
+  #
+  # cohortsGenerated <- CohortGenerator::generateCohortSet(connectionDetails = connectionDetails,
+  #                                                        cdmDatabaseSchema = cdmDatabaseSchema,
+  #                                                        cohortDatabaseSchema = cohortDatabaseSchema,
+  #                                                        cohortTableNames = cohortTableNames,
+  #                                                        cohortDefinitionSet = cohortDefinitionSet,
+  #                                                        incrementalFolder = cdm_incrementalFolder,
+  #                                                        incremental = TRUE)
 
-  cdm_incrementalFolder <- file.path(outFolder,
-                                     'incrementalFolder')
+  # cohortTable <- tempTable #come back to this line may need to create this variable diff
+  #
+  # tempTable <- paste0(projectName, "_cohort_table_", cdmDatabaseSchema) #this will hold all the cohorts for all the runs
+  # cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = tempTable)
 
-  CohortGenerator::createCohortTables(connectionDetails = connectionDetails, #this is creating the cohorts
-                                      cohortTableNames = cohortTableNames,
-                                      cohortDatabaseSchema = cohortDatabaseSchema,
-                                      incremental = TRUE)
-
-  cohortsGenerated <- CohortGenerator::generateCohortSet(connectionDetails = connectionDetails,
-                                                         cdmDatabaseSchema = cdmDatabaseSchema,
-                                                         cohortDatabaseSchema = cohortDatabaseSchema,
-                                                         cohortTableNames = cohortTableNames,
-                                                         cohortDefinitionSet = cohortDefinitionSet,
-                                                         incrementalFolder = cdm_incrementalFolder,
-                                                         incremental = TRUE)
-
-  cohortTable <- tempTable #come back to this line may need to create this variable diff
-
-  tempTable <- paste0(projectName, "_cohort_table_", cdmDatabaseSchema) #this will hold all the cohorts for all the runs
-  cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = tempTable)
-
-  buildOptions <- CohortIncidence::buildOptions(cohortTable =  paste0(cohortDatabaseSchema,'.',cohortTableNames$cohortTable),
+  buildOptions <- CohortIncidence::buildOptions(cohortTable = paste0(cohortDatabaseSchema,'.',cohortTableNames$cohortTable),
                                                 cdmDatabaseSchema = cdmDatabaseSchema,
-                                                sourceName = sourceName,
+                                                sourceName = databaseId,
                                                 refId = 1)
 
   executeResults <- CohortIncidence::executeAnalysis(connectionDetails = connectionDetails,
-                                                     incidenceDesign = test,
+                                                     incidenceDesign = irDesign,
                                                      buildOptions = buildOptions)
 
   #outFolder <- file.path(resultsFolder, dbList[[dbUp]]$sourceKey)
 
 
 
-  write.csv(executeResults, paste(path=file.path(exportFolder), "/", db$sourceKey, "_results.csv", sep=""), row.names = F)
+  write.csv(executeResults, paste(path=file.path(exportFolder), "/", databaseId, "_results.csv", sep=""), row.names = F)
 
   # build options
 
