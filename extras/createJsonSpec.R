@@ -48,7 +48,7 @@ for (i in 1:length(cohortJsonFiles)) {
 targets <- list(CohortIncidence::createCohortRef(id=8334, name="At risk, 2016+"));
 
 
-#
+
 outcomes <- list(CohortIncidence::createOutcomeDef(id=1,name="Autism", cohortId=3417, cleanWindow=9999),
                  CohortIncidence::createOutcomeDef(id=2,name="Ulcerative Colitis", cohortId=10606, cleanWindow=9999)
                  # CohortIncidence::createOutcomeDef(id=1,name="Crohn's Disease", cohortId=10616, cleanWindow=9999),

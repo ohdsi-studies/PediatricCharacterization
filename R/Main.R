@@ -19,7 +19,7 @@ execute <- function(connectionDetails,
                     outputFolder,
                     cdmDatabaseSchema,
                     cohortDatabaseSchema,
-                    cohortTable = "PediatricCharacterization_cohort",
+                    cohortTable,
                     #cohortTablePrefix = "aesi",
                     databaseId = "Unknown",
                     databaseName = "Unknown",
@@ -49,18 +49,23 @@ execute <- function(connectionDetails,
   # Write out the system information
   ParallelLogger::logInfo(.systemInfo())
 
-  # if (verifyDependencies) {
-  #   ParallelLogger::logInfo("Checking whether correct package versions are installed")
-  #   verifyDependencies()
-  # }
+  if (verifyDependencies) {
+    ParallelLogger::logInfo("Checking whether correct package versions are installed")
+    verifyDependencies()
+  }
 
   #Variables---------------------
   tempEmulationSchema <- getOption("sqlRenderTempEmulationSchema")
   minCellCount= minCellCount
   incrementalFolder = file.path(outputFolder, "incrementalFolder")
 
-  cohorts <- CohortGenerator::getCohortDefinitionSet(packageName="PediatricCharacterization", settingsFileName = "settings/CohortsToCreate.csv")
-
+  cohorts <- cohortDefinitionSet <- CohortGenerator::getCohortDefinitionSet(
+            settingsFileName = file.path(
+                packageRoot, "inst/settings/CohortsToCreate.csv"
+              ),
+               jsonFolder = file.path(packageRoot, "inst/cohorts"),
+               sqlFolder = file.path(packageRoot, "inst/sql/sql_server")
+             )
 
   ################################
   # STEP 1 - Create Cohorts
@@ -110,32 +115,26 @@ execute <- function(connectionDetails,
 
 
 
-    CohortDiagnostics::executeDiagnostics(#packageName = "PediatricCharacterization",
-                                            #cohortToCreateFile = "settings/CohortsToCreate.csv",
-                                            cohortDefinitionSet = cohorts,
+    CohortDiagnostics::executeDiagnostics(  cohortDefinitionSet = cohorts,
                                             exportFolder = exportFolder,
                                             connectionDetails = connectionDetails,
                                             cdmDatabaseSchema = cdmDatabaseSchema,
                                             cohortDatabaseSchema = cohortDatabaseSchema,
                                             cohortTable = cohortTable,
-                                            #tempEmulationSchema = tempEmulationSchema,
                                             databaseId = databaseId,
                                             databaseName = databaseName,
                                             databaseDescription = databaseDescription,
-                                            runInclusionStatistics = TRUE,
+                                            cdmVersion = 5,
+                                            runInclusionStatistics = FALSE,
                                             runIncludedSourceConcepts = TRUE,
-                                            runVisitContext = TRUE,
                                             runOrphanConcepts = TRUE,
-                                            #runTimeDistributions = TRUE,
+                                            runVisitContext = TRUE,
                                             runBreakdownIndexEvents = TRUE,
                                             runIncidenceRate = TRUE,
-                                            #runCohortOverlap = TRUE,
-                                            #runCohortCharacterization = TRUE,
-                                            temporalCovariateSettings = list(CohortDiagnostics::getDefaultCovariateSettings(),createInfantCovariateSettings()),
-                                            runTemporalCohortCharacterization = TRUE,
                                             runTimeSeries = FALSE,
+                                            runTemporalCohortCharacterization = TRUE,
                                             minCellCount = 5,
-                                            incremental = FALSE,
+                                            incremental = TRUE,
                                             incrementalFolder = incrementalFolder)
 
 
@@ -184,7 +183,7 @@ execute <- function(connectionDetails,
     runIR(connectionDetails = connectionDetails,
           cdmDatabaseSchema = cdmDatabaseSchema,
           cohortDatabaseSchema = cohortDatabaseSchema,
-          cohortTablePrefix = cohortTablePrefix,
+          #cohortTablePrefix = cohortTablePrefix,
           exportFolder = exportFolder,
           databaseId = databaseId,
           databaseName = databaseName,

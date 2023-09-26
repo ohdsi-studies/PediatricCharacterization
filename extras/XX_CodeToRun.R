@@ -27,6 +27,9 @@ database <- databases[1,]
 options(andromedaTempFolder = "D:/andromedaTemp")
 options(sqlRenderTempEmulationSchema = NULL)
 
+# usernameService = "reShiftUserName"
+# passwordService = "redShiftPassword"
+
 # Details for connecting to the server:
 # See ?DatabaseConnector::createConnectionDetails for help
 connectionDetails <-
@@ -42,7 +45,7 @@ connectionDetails <-
 outputFolder <- database$outputFolder
 cdmDatabaseSchema <- database$cdmDatabaseSchema
 cohortDatabaseSchema <- database$cohortDatabaseSchema
-cohortTablePrefix <- database$cohortTablePrefix
+#cohortTablePrefix <- database$cohortTablePrefix
 cohortTable <- database$cohortTable
 databaseId <- database$databaseId
 databaseName <- database$databaseName
@@ -61,8 +64,8 @@ PediatricCharacterization::execute(connectionDetails = connectionDetails,
                                           databaseId = databaseId,
                                           databaseName = databaseName,
                                           createCohortsAndRef = TRUE,
-                                          runCohortDiagnostics = FALSE,
-                                          runIR = TRUE,
+                                          runCohortDiagnostics = TRUE,
+                                          runIR = FALSE,
                                           minCellCount = 5)
 
 # --- SHARE RESULTS ------------------------------------------------------------
@@ -95,6 +98,8 @@ CohortDiagnostics::createDiagnosticsExplorerZip(outputZipfile = file.path(folder
 CohortDiagnostics::launchDiagnosticsExplorer(overwritePublishDir = TRUE, makePublishable=TRUE,
                                              sqliteDbPath = file.path(folder, "MergedCohortDiagnosticsData.sqlite"))
 
+
+#THIS CAN BE DELETED BC IT IS LOCATED IN CREATEJSONSPEC.R
 ###############################################################################################################################
 #----PULL BACK cohortIds and use cohortgenerator to save them as jsons etc------------------------------------------------
 ###############################################################################################################################
@@ -102,63 +107,63 @@ CohortDiagnostics::launchDiagnosticsExplorer(overwritePublishDir = TRUE, makePub
 #epilepsy	12403; Crohn’s disease	10616; ulcerative colitis	10606; chronic lymphocytic leukemia	10642; autism spectrum disorder	3417
 #major depressive disorder	10628; Multiple Sclerosis	10641	psoriasis	10626	(plaque)
 
-cohorts <- c(10640, 10647, 10616, 10647, 12396, 10659, 12468, 12403, 10616, 10606, 10642, 3417, 10628, 10641, 10626, 8334)
-cohorts <- c(10606, 3417, 8334)
-
-baseUrl <- "https://epi.jnj.com:8443/WebAPI"
-ROhdsiWebApi::authorizeWebApi(baseUrl, "windows") # Windows
-cohortDefinitionSet <- ROhdsiWebApi::exportCohortDefinitionSet(baseUrl = baseUrl,cohortIds = cohorts)
-
-
-
-#save off cohorts
-
-CohortGenerator::saveCohortDefinitionSet(
-  cohortDefinitionSet = cohortDefinitionSet,
-  settingsFileName = file.path(
-    packageRoot,
-    "inst/settings/CohortsToCreate.csv"
-  ),
-  jsonFolder = file.path(
-    packageRoot,
-    "inst/cohorts"
-  ),
-  sqlFolder = file.path(
-    packageRoot,
-    "inst/sql/sql_server"
-  )
-)
-
-#for DPs use this
-cohortDefinitionSet <- getCohortDefinitionSet(
-  settingsFileName = file.path(
-    packageRoot, "inst/settings/CohortsToCreate.csv"
-  ),
-  jsonFolder = file.path(packageRoot, "inst/cohorts"),
-  sqlFolder = file.path(packageRoot, "inst/sql/sql_server")
-)
-
-
-
-cohortsToCreate <- CohortGenerator::createEmptyCohortDefinitionSet()
-
-# Fill the cohort set using  cohorts included in this
-# package as an example
-cohortJsonFiles <- list.files(path = system.file("testdata/name/cohorts", package = "CohortGenerator"), full.names = TRUE)
-for (i in 1:length(cohortJsonFiles)) {
-  cohortJsonFileName <- cohortJsonFiles[i]
-  cohortName <- tools::file_path_sans_ext(basename(cohortJsonFileName))
-  # Here we read in the JSON in order to create the SQL
-  # using [CirceR](https://ohdsi.github.io/CirceR/)
-  # If you have your JSON and SQL stored differenly, you can
-  # modify this to read your JSON/SQL files however you require
-  cohortJson <- readChar(cohortJsonFileName, file.info(cohortJsonFileName)$size)
-  cohortExpression <- CirceR::cohortExpressionFromJson(cohortJson)
-  cohortSql <- CirceR::buildCohortQuery(cohortExpression, options = CirceR::createGenerateOptions(generateStats = FALSE))
-  cohortsToCreate <- rbind(cohortsToCreate, data.frame(cohortId = i,
-                                                       cohortName = cohortName,
-                                                       sql = cohortSql,
-                                                       stringsAsFactors = FALSE))
-}
-
-
+# cohorts <- c(10640, 10647, 10616, 10647, 12396, 10659, 12468, 12403, 10616, 10606, 10642, 3417, 10628, 10641, 10626, 8334)
+# cohorts <- c(10606, 3417, 8334)
+#
+# baseUrl <- "https://epi.jnj.com:8443/WebAPI"
+# ROhdsiWebApi::authorizeWebApi(baseUrl, "windows") # Windows
+# cohortDefinitionSet <- ROhdsiWebApi::exportCohortDefinitionSet(baseUrl = baseUrl,cohortIds = cohorts)
+#
+#
+#
+# #save off cohorts
+#
+# CohortGenerator::saveCohortDefinitionSet(
+#   cohortDefinitionSet = cohortDefinitionSet,
+#   settingsFileName = file.path(
+#     packageRoot,
+#     "inst/settings/CohortsToCreate.csv"
+#   ),
+#   jsonFolder = file.path(
+#     packageRoot,
+#     "inst/cohorts"
+#   ),
+#   sqlFolder = file.path(
+#     packageRoot,
+#     "inst/sql/sql_server"
+#   )
+# )
+#
+# #for DPs use this
+# cohortDefinitionSet <- getCohortDefinitionSet(
+#   settingsFileName = file.path(
+#     packageRoot, "inst/settings/CohortsToCreate.csv"
+#   ),
+#   jsonFolder = file.path(packageRoot, "inst/cohorts"),
+#   sqlFolder = file.path(packageRoot, "inst/sql/sql_server")
+# )
+#
+#
+#
+# cohortsToCreate <- CohortGenerator::createEmptyCohortDefinitionSet()
+#
+# # Fill the cohort set using  cohorts included in this
+# # package as an example
+# cohortJsonFiles <- list.files(path = system.file("testdata/name/cohorts", package = "CohortGenerator"), full.names = TRUE)
+# for (i in 1:length(cohortJsonFiles)) {
+#   cohortJsonFileName <- cohortJsonFiles[i]
+#   cohortName <- tools::file_path_sans_ext(basename(cohortJsonFileName))
+#   # Here we read in the JSON in order to create the SQL
+#   # using [CirceR](https://ohdsi.github.io/CirceR/)
+#   # If you have your JSON and SQL stored differenly, you can
+#   # modify this to read your JSON/SQL files however you require
+#   cohortJson <- readChar(cohortJsonFileName, file.info(cohortJsonFileName)$size)
+#   cohortExpression <- CirceR::cohortExpressionFromJson(cohortJson)
+#   cohortSql <- CirceR::buildCohortQuery(cohortExpression, options = CirceR::createGenerateOptions(generateStats = FALSE))
+#   cohortsToCreate <- rbind(cohortsToCreate, data.frame(cohortId = i,
+#                                                        cohortName = cohortName,
+#                                                        sql = cohortSql,
+#                                                        stringsAsFactors = FALSE))
+# }
+#
+#
