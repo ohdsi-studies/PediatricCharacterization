@@ -27,8 +27,6 @@ database <- databases[1,]
 options(andromedaTempFolder = "D:/andromedaTemp")
 options(sqlRenderTempEmulationSchema = NULL)
 
-# usernameService = "reShiftUserName"
-# passwordService = "redShiftPassword"
 
 # Details for connecting to the server:
 # See ?DatabaseConnector::createConnectionDetails for help
@@ -64,8 +62,8 @@ PediatricCharacterization::execute(connectionDetails = connectionDetails,
                                           databaseId = databaseId,
                                           databaseName = databaseName,
                                           createCohortsAndRef = TRUE,
-                                          runCohortDiagnostics = TRUE,
-                                          runIR = FALSE,
+                                          runCohortDiagnostics = FALSE,
+                                          runIR = TRUE,
                                           minCellCount = 5)
 
 # --- SHARE RESULTS ------------------------------------------------------------

@@ -113,7 +113,7 @@ cat(analysisSql)
 #
 # userNameService = "redShiftUserName" # example: "this is key ring service that securely stores credentials"
 # passwordService = "redShiftPassword"
-source(file.path(packageRoot, "R/buildCDMSources.R"))
+source(file.path(packageRoot, "extras/buildCDMSources.R"))
 
 #declare project name
 projectName <- "PediatricCharacterization"

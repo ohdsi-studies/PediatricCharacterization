@@ -241,10 +241,14 @@ computeAndExportIncidenceAnalysis <- function(connection,
   # tempTable <- paste0(projectName, "_cohort_table_", cdmDatabaseSchema) #this will hold all the cohorts for all the runs
   # cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = tempTable)
 
-  buildOptions <- CohortIncidence::buildOptions(cohortTable = paste0(cohortDatabaseSchema,'.',CohortGenerator::getCohortTableNames(cohortTable)),
+  buildOptions <- CohortIncidence::buildOptions(cohortTable = paste0(cohortDatabaseSchema,'.',CohortGenerator::getCohortTableNames(cohortTable)[1]),
                                                 cdmDatabaseSchema = cdmDatabaseSchema,
                                                 sourceName = databaseId,
                                                 refId = 1)
+
+  #cohortTable = "scratch_jhardi10.PediatricCharacterization_cohort_table_cdm_optum_extended_ses_v2559"
+  #db$cdmDatabaseSchema = "cdm_optum_extended_ses_v2559"
+  #db$sourceName ="Optum Extended SES (v2559)"
 
   executeResults <- CohortIncidence::executeAnalysis(connectionDetails = connectionDetails,
                                                      incidenceDesign = irDesign,
