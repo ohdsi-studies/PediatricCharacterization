@@ -1,7 +1,31 @@
 {
   "targetDefs": [
     {
-      "id": 8334,
+      "id": 14061,
+      "name": "At risk, 2017+"
+    },
+    {
+      "id": 14063,
+      "name": "At risk, 2017"
+    },
+    {
+      "id": 14064,
+      "name": "At risk, 2018"
+    },
+    {
+      "id": 14065,
+      "name": "At risk, 2019"
+    },
+    {
+      "id": 14066,
+      "name": "At risk, 2020"
+    },
+    {
+      "id": 14067,
+      "name": "At risk, 2021"
+    },
+    {
+      "id": 14068,
       "name": "At risk, 2016+"
     }
   ],
@@ -17,32 +41,214 @@
       "name": "Ulcerative Colitis",
       "cohortId": 10606,
       "cleanWindow": 9999
+    },
+    {
+      "id": 3,
+      "name": "Crohn's Disease",
+      "cohortId": 10616,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 4,
+      "name": "Plaque Psoriasis",
+      "cohortId": 10626,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 5,
+      "name": "Major Depressive Disorder",
+      "cohortId": 10628,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 6,
+      "name": "Attention deficit hyperactivity disorder",
+      "cohortId": 10640,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 7,
+      "name": "Multiple sclerosis",
+      "cohortId": 10641,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 8,
+      "name": "Chronic lymphocytic leukemia",
+      "cohortId": 10642,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 9,
+      "name": "Type 2 diabetes mellitus",
+      "cohortId": 10647,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 10,
+      "name": "Anaphylaxis non envirnomental",
+      "cohortId": 10659,
+      "cleanWindow": 30
+    },
+    {
+      "id": 11,
+      "name": "Urinary tract infection",
+      "cohortId": 12396,
+      "cleanWindow": 30
+    },
+    {
+      "id": 12,
+      "name": "Epilepsy",
+      "cohortId": 12403,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 13,
+      "name": "Migraine",
+      "cohortId": 12468,
+      "cleanWindow": 30
+    },
+    {
+      "id": 14,
+      "name": "Burns",
+      "cohortId": 13676,
+      "cleanWindow": 30
+    },
+    {
+      "id": 15,
+      "name": "Cystic Fibrosis",
+      "cohortId": 13626,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 16,
+      "name": "Down Syndrome",
+      "cohortId": 13625,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 17,
+      "name": "Motor Vehicle Accidents",
+      "cohortId": 13692,
+      "cleanWindow": 30
+    },
+    {
+      "id": 18,
+      "name": "Firearm Accidents",
+      "cohortId": 13631,
+      "cleanWindow": 30
+    },
+    {
+      "id": 19,
+      "name": "Suicide ideation attempt earliest event",
+      "cohortId": 3429,
+      "cleanWindow": 30
+    },
+    {
+      "id": 21,
+      "name": "Asthma",
+      "cohortId": 14041,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 22,
+      "name": "Atopic Dermatitis",
+      "cohortId": 12734,
+      "cleanWindow": 9999
+    },
+    {
+      "id": 23,
+      "name": "Otitis Media",
+      "cohortId": 372,
+      "cleanWindow": 30
     }
   ],
   "timeAtRiskDefs": [
     {
-      "id": 1,
+      "id": 2,
       "start": {
         "dateField": "start",
         "offset": 0
       },
       "end": {
         "dateField": "start",
-        "offset": 9999
+        "offset": 365
+      }
+    },
+    {
+      "id": 2,
+      "start": {
+        "dateField": "start",
+        "offset": 0
+      },
+      "end": {
+        "dateField": "start",
+        "offset": 180
+      }
+    },
+    {
+      "id": 2,
+      "start": {
+        "dateField": "start",
+        "offset": 0
+      },
+      "end": {
+        "dateField": "start",
+        "offset": 90
+      }
+    },
+    {
+      "id": 2,
+      "start": {
+        "dateField": "start",
+        "offset": 0
+      },
+      "end": {
+        "dateField": "start",
+        "offset": 30
       }
     }
   ],
   "analysisList": [
     {
       "targets": [
-        8334
+        14061,
+        14063,
+        14064,
+        14065,
+        14066,
+        14067,
+        14068
       ],
       "outcomes": [
         1,
-        2
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        23
       ],
       "tars": [
-        1
+        2,
+        2,
+        2,
+        2
       ]
     }
   ],

@@ -1,8 +1,30 @@
 atlas_id,cohort_id,cohort_name,logic_description,generate_stats
-10606,10606,[PL] Earliest event of Ulcerative colitis,"source: 5803;
-hashTag: #ASSURE, #Indication, #ASSURE-Indication;
-submitter: Joel Swerdel;
-logic: Earliest occurrence of Ulcerative Colitis indexed on diagnosis date, for the first time in history; cohort exit is the end of continuous observation;",FALSE
-3417,3417,[PL] Earliest event of Autism,"hashTag: #2021;
-logic: First occurrence Autism spectrum disorder indexed on diagnosis date; cohort exit is the end of continuous observation.",FALSE
-8334,8334,[COVID AESI] persons at risk at start of year 2017-2019 with 365d prior observation,NA,FALSE
+10606,10606,Earliest event of Ulcerative colitis,NA,FALSE
+3417,3417,Earliest event of Autism,NA,FALSE
+14061,14061,persons at risk at start of year 2017-2022 with 365d prior observation,NA,FALSE
+10616,10616,Crohn's Disease,NA,FALSE
+10626,10626,Plaque Psoriasis,NA,FALSE
+10628,10628,Major Depressive Disorder,NA,FALSE
+10640,10640,Attention Deficit Disorder,NA,FALSE
+10641,10641,Multiple Sclerorsis,NA,FALSE
+10642,10642,Chronic Lymphocytic Leukemia,NA,FALSE
+10647,10647,Type 2 diabetes mellitus,NA,FALSE
+10659,10659,Anaphylaxis non environmental,NA,FALSE
+12396,12396,Urinary tract infection,NA,FALSE
+12403,12403,Epilepsy,NA,FALSE
+12468,12468,Migraine,NA,FALSE
+13676,13676,Burns,NA,FALSE
+13626,13626,Cystic Fibrosis,NA,FALSE
+13625,13625,Down Syndrome,NA,FALSE
+13692,13692,Motor Vehicle Accident,NA,FALSE
+13631,13631,Firearm Accident,NA,FALSE
+3429,3429,"Suicide ideation attempt, earliest event including drug poisoning",NA,FALSE
+14041,14041,Asthma,NA,FALSE
+12734,12734,Atopic Dermatitis,NA,FALSE
+372,372,Otitis Media,NA,FALSE
+14063,14063,persons at risk at start of year 2017 with 365d prior observation,NA,FALSE
+14064,14064,persons at risk at start of year 2018 with 365d prior observation,NA,FALSE
+14065,14065,persons at risk at start of year 2019 with 365d prior observation,NA,FALSE
+14066,14066,persons at risk at start of year 2020 with 365d prior observation,NA,FALSE
+14067,14067,persons at risk at start of year 2021 with 365d prior observation,NA,FALSE
+14068,14068,persons at risk at start of year 2022 with 365d prior observation,NA,FALSE

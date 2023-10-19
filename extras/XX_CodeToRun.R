@@ -20,7 +20,7 @@ projectName = 'PediatricCharacterization'
 databases <- read.csv(file.path(packageRoot, "XX_databases.csv"))
 # CohortDiagnostics::preMergeDiagnosticsFiles(file.path(outputFolder, "cohortDiagnostics"))
 #databases <- read.csv("XX_databases.csv",header=TRUE)
-database <- databases[1,]
+database <- databases[3,]
 #DONE:  #1,2,3
 
 # --- RUN ----------------------------------------------------------------------
@@ -79,7 +79,7 @@ PediatricCharacterization::execute(connectionDetails = connectionDetails,
 # CohortDiagnostics::preMergeDiagnosticsFiles(file.path(outputFolder, "cohortDiagnostics"))
 # CohortDiagnostics::launchDiagnosticsExplorer(dataFolder = file.path(outputFolder,"cohortDiagnostics"))
 
-folder <- file.path('D:/StudyResults/2023/PediatricCharacterization/results_optumses/cohortDiagnostics')
+folder <- file.path('D:/StudyResults/2023/PediatricCharacterization/results_ccae/cohortDiagnostics')
 
 CohortDiagnostics::createMergedResultsFile(dataFolder = folder, overwrite = TRUE,
                                            sqliteDbPath = file.path(folder,

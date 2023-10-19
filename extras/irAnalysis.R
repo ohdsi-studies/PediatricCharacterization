@@ -45,34 +45,54 @@ for (i in 1:length(cohortJsonFiles)) {
 }
 
 #all persons at risk 2016-2022
-targets <- list(CohortIncidence::createCohortRef(id=8334, name="At risk, 2016+"));
+targets <- list(CohortIncidence::createCohortRef(id=14061, name="At risk, 2017+"),
+                CohortIncidence::createCohortRef(id=14063, name="At risk, 2017"),
+                CohortIncidence::createCohortRef(id=14064, name="At risk, 2018"),
+                CohortIncidence::createCohortRef(id=14065, name="At risk, 2019"),
+                CohortIncidence::createCohortRef(id=14066, name="At risk, 2020"),
+                CohortIncidence::createCohortRef(id=14067, name="At risk, 2021"),
+                CohortIncidence::createCohortRef(id=14068, name="At risk, 2016+"));
 
 
 #
 outcomes <- list(CohortIncidence::createOutcomeDef(id=1,name="Autism", cohortId=3417, cleanWindow=9999),
-             CohortIncidence::createOutcomeDef(id=2,name="Ulcerative Colitis", cohortId=10606, cleanWindow=9999)
-                 # CohortIncidence::createOutcomeDef(id=1,name="Crohn's Disease", cohortId=10616, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Plaque Psoriasis", cohortId=10626, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Major Depressive Disorder", cohortId=10628, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Attention deficit hyperactivity disorder", cohortId=10640, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Multiple sclerosis", cohortId=10641, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Chronic lymphocytic leukemia", cohortId=10642, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Type 2 diabetes mellitus", cohortId=10647, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Anaphylaxis non envirnomental", cohortId=10659, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Urinary tract infection", cohortId=12396, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Epilepsy", cohortId=12403, cleanWindow=9999),
-                 # CohortIncidence::createOutcomeDef(id=1,name="Migraine", cohortId=12468, cleanWindow=9999)
-             # atopic dermatitis, neurofibromatosis, Otitis media, attention deficit hyperactivity disorder, type 1 diabetes mellitus,
+             CohortIncidence::createOutcomeDef(id=2,name="Ulcerative Colitis", cohortId=10606, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=3,name="Crohn's Disease", cohortId=10616, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=4,name="Plaque Psoriasis", cohortId=10626, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=5,name="Major Depressive Disorder", cohortId=10628, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=6,name="Attention deficit hyperactivity disorder", cohortId=10640, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=7,name="Multiple sclerosis", cohortId=10641, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=8,name="Chronic lymphocytic leukemia", cohortId=10642, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=9,name="Type 2 diabetes mellitus", cohortId=10647, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=10,name="Anaphylaxis non envirnomental", cohortId=10659, cleanWindow=30),
+                 CohortIncidence::createOutcomeDef(id=11,name="Urinary tract infection", cohortId=12396, cleanWindow=30),
+                 CohortIncidence::createOutcomeDef(id=12,name="Epilepsy", cohortId=12403, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=13,name="Migraine", cohortId=12468, cleanWindow=30),
+                 CohortIncidence::createOutcomeDef(id=14,name="Burns", cohortId=13676, cleanWindow=30),
+                 CohortIncidence::createOutcomeDef(id=15,name="Cystic Fibrosis", cohortId=13626, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=16,name="Down Syndrome", cohortId=13625, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=17,name="Motor Vehicle Accidents", cohortId=13692, cleanWindow=30),
+                 CohortIncidence::createOutcomeDef(id=18,name="Firearm Accidents", cohortId=13631, cleanWindow=30),
+                 CohortIncidence::createOutcomeDef(id=19,name='Suicide ideation attempt earliest event', cohortId=3429, cleanWindow=30),
+                 CohortIncidence::createOutcomeDef(id=21,name="Asthma", cohortId=14041, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=22,name="Atopic Dermatitis", cohortId=12734, cleanWindow=9999),
+                 CohortIncidence::createOutcomeDef(id=23,name="Otitis Media", cohortId=372, cleanWindow=30)
+
+             # atopic dermatitis, Otitis media, attention deficit hyperactivity disorder, type 1 diabetes mellitus,
              # type 2 diabetes mellitus, urinary tract infections, anaphylaxis, motor vehicle accidents, asthma, migraine, epilepsy,
              # Crohn’s disease, ulcerative colitis, chronic lymphocytic leukemia, skin burns, autism spectrum disorder,
              # generalized anxiety disorder, major depressive disorder, neuroblastoma, down syndrome, cystic fibrosis,
-             # atopic dermatitis AND other phenotypes that collaborators deem of interest. 
+             # atopic dermatitis AND other phenotypes that collaborators deem of interest.
 
 
 );
 
 
-tars <- list(CohortIncidence::createTimeAtRiskDef(id=1, startWith="start", endWith="start", endOffset = 9999)
+tars <- list(CohortIncidence::createTimeAtRiskDef(id=2, startWith="start", endWith="start", endOffset = 365),
+             CohortIncidence::createTimeAtRiskDef(id=2, startWith="start", endWith="start", endOffset = 180),
+             CohortIncidence::createTimeAtRiskDef(id=2, startWith="start", endWith="start", endOffset = 90),
+             CohortIncidence::createTimeAtRiskDef(id=2, startWith="start", endWith="start", endOffset = 30)
+
 );
 
 # Note: c() is used when dealing with an array of numbers,
@@ -96,7 +116,7 @@ irDesign <- CohortIncidence::createIncidenceDesign(targetDefs = targets,
 irDesign$asJSON(pretty = T)
 
 #save design
-readr::write_file(jsonlite::prettify(irDesign$asJSON(), indent=2), "irDesign.json", append = F)
+readr::write_file(jsonlite::prettify(irDesign$asJSON(), indent=2), "inst/settings/irDesign.json", append = F)
 
 #this would go below into the loop that the DPs would run - above is a one time
 #everything above this line is in createJsonSpec.R file

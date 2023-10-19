@@ -1,0 +1,405 @@
+{
+  "ConceptSets": [
+    {
+      "id": 0,
+      "name": "[NW_Study] Burns",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "21835004",
+              "CONCEPT_ID": 441172,
+              "CONCEPT_NAME": "Disorder due to and following burn",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "219356008",
+              "CONCEPT_ID": 432810,
+              "CONCEPT_NAME": "Injury of unknown intent by burns or fire",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "403448009",
+              "CONCEPT_ID": 4299815,
+              "CONCEPT_NAME": "Oral ulceration due to radiation burn",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4 Hierarchy",
+              "CONCEPT_CODE": "1003556",
+              "CONCEPT_ID": 45889914,
+              "CONCEPT_NAME": "Local Treatment Procedures for Burns",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "C",
+              "STANDARD_CONCEPT_CAPTION": "Classification",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Morph Abnormality",
+              "CONCEPT_CODE": "48333001",
+              "CONCEPT_ID": 4168004,
+              "CONCEPT_NAME": "Burn injury",
+              "DOMAIN_ID": "Observation",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "11998161000119104",
+              "CONCEPT_ID": 760847,
+              "CONCEPT_NAME": "Second degree burn of right hand",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "125666000",
+              "CONCEPT_ID": 442013,
+              "CONCEPT_NAME": "Burn",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Clinical Finding",
+              "CONCEPT_CODE": "12203871000119106",
+              "CONCEPT_ID": 760858,
+              "CONCEPT_NAME": "Second degree burn of left hand",
+              "DOMAIN_ID": "Condition",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "name": "[EPI1102] Burn drug and procedure treatments",
+      "expression": {
+        "items": [
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Ingredient",
+              "CONCEPT_CODE": "9793",
+              "CONCEPT_ID": 966956,
+              "CONCEPT_NAME": "silver sulfadiazine",
+              "DOMAIN_ID": "Drug",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "RxNorm"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4 Hierarchy",
+              "CONCEPT_CODE": "1003120",
+              "CONCEPT_ID": 45889089,
+              "CONCEPT_NAME": "Anesthesia for second- and third-degree burn excision or debridement with or without skin grafting, any site, for total body surface area (TBSA) treated during anesthesia and surgery",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "C",
+              "STANDARD_CONCEPT_CAPTION": "Classification",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4 Hierarchy",
+              "CONCEPT_CODE": "1003556",
+              "CONCEPT_ID": 45889914,
+              "CONCEPT_NAME": "Local Treatment Procedures for Burns",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "C",
+              "STANDARD_CONCEPT_CAPTION": "Classification",
+              "VOCABULARY_ID": "CPT4"
+            }
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4",
+              "CONCEPT_CODE": "16000",
+              "CONCEPT_ID": 2102559,
+              "CONCEPT_NAME": "Initial treatment, first degree burn, when no more than local treatment is required",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4 Hierarchy",
+              "CONCEPT_CODE": "1003558",
+              "CONCEPT_ID": 45887539,
+              "CONCEPT_NAME": "Dressings and/or debridement of partial-thickness burns, initial or subsequent",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "C",
+              "STANDARD_CONCEPT_CAPTION": "Classification",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Procedure",
+              "CONCEPT_CODE": "240992000",
+              "CONCEPT_ID": 4081416,
+              "CONCEPT_NAME": "Escharotomy of burnt skin",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4 Hierarchy",
+              "CONCEPT_CODE": "1014946",
+              "CONCEPT_ID": 45887796,
+              "CONCEPT_NAME": "Surgical preparation or creation of recipient site by excision of open wounds, burn eschar, or scar (including subcutaneous tissues), or incisional release of scar contracture, face, scalp, eyelids, mouth, neck, ears, orbits, genitalia, hands, feet and/or",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "C",
+              "STANDARD_CONCEPT_CAPTION": "Classification",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Procedure",
+              "CONCEPT_CODE": "40872008",
+              "CONCEPT_ID": 4248822,
+              "CONCEPT_NAME": "Excisional debridement of burn",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Procedure",
+              "CONCEPT_CODE": "34390007",
+              "CONCEPT_ID": 4145455,
+              "CONCEPT_NAME": "Nonexcisional debridement of burn",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "SNOMED"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "Ingredient",
+              "CONCEPT_CODE": "9789",
+              "CONCEPT_ID": 966913,
+              "CONCEPT_NAME": "silver nitrate",
+              "DOMAIN_ID": "Drug",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "S",
+              "STANDARD_CONCEPT_CAPTION": "Standard",
+              "VOCABULARY_ID": "RxNorm"
+            },
+            "includeDescendants": true
+          },
+          {
+            "concept": {
+              "CONCEPT_CLASS_ID": "CPT4 Hierarchy",
+              "CONCEPT_CODE": "1014671",
+              "CONCEPT_ID": 45888210,
+              "CONCEPT_NAME": "Surgical preparation or creation of recipient site by excision of open wounds, burn eschar, or scar (including subcutaneous tissues), or incisional release of scar contracture, trunk, arms, legs",
+              "DOMAIN_ID": "Procedure",
+              "INVALID_REASON": "V",
+              "INVALID_REASON_CAPTION": "Valid",
+              "STANDARD_CONCEPT": "C",
+              "STANDARD_CONCEPT_CAPTION": "Classification",
+              "VOCABULARY_ID": "CPT4"
+            },
+            "includeDescendants": true
+          }
+        ]
+      }
+    }
+  ],
+  "PrimaryCriteria": {
+    "CriteriaList": [
+      {
+        "ConditionOccurrence": {
+          "CodesetId": 0
+        }
+      },
+      {
+        "ProcedureOccurrence": {
+          "CodesetId": 0
+        }
+      },
+      {
+        "Observation": {
+          "CodesetId": 0
+        }
+      }
+    ],
+    "ObservationWindow": {
+      "PriorDays": 0,
+      "PostDays": 0
+    },
+    "PrimaryCriteriaLimit": {
+      "Type": "All"
+    }
+  },
+  "QualifiedLimit": {
+    "Type": "First"
+  },
+  "ExpressionLimit": {
+    "Type": "All"
+  },
+  "InclusionRules": [
+    {
+      "name": "burn treatment in 180 days after index",
+      "expression": {
+        "Type": "ANY",
+        "CriteriaList": [
+          {
+            "Criteria": {
+              "DrugExposure": {
+                "CodesetId": 1
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 0,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 180,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 2,
+              "Count": 1
+            }
+          },
+          {
+            "Criteria": {
+              "ProcedureOccurrence": {
+                "CodesetId": 1
+              }
+            },
+            "StartWindow": {
+              "Start": {
+                "Days": 0,
+                "Coeff": -1
+              },
+              "End": {
+                "Days": 180,
+                "Coeff": 1
+              },
+              "UseEventEnd": false
+            },
+            "Occurrence": {
+              "Type": 2,
+              "Count": 1
+            }
+          }
+        ],
+        "DemographicCriteriaList": [],
+        "Groups": []
+      }
+    }
+  ],
+  "EndStrategy": {
+    "DateOffset": {
+      "DateField": "StartDate",
+      "Offset": 0
+    }
+  },
+  "CensoringCriteria": [],
+  "CollapseSettings": {
+    "CollapseType": "ERA",
+    "EraPad": 0
+  },
+  "CensorWindow": {},
+  "cdmVersionRange": ">=5.0.0"
+}
