@@ -1,7 +1,11 @@
 PediatricCharacterization
 =============
 
+<<<<<<< HEAD
 <img src="https://img.shields.io/badge/Study%20Status-Started-blue.svg" alt="Study Status: Started">
+=======
+<img src="https://img.shields.io/badge/Study%20Status-Complete-orange.svg" alt="Study Status: Draft">
+>>>>>>> d7e0576f006b2b5d584621bd09efed3371d7d94a
 
 - Analytics use case(s): **Characterization**
 - Study type: **Clinical Application**
