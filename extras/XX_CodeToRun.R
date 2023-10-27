@@ -30,6 +30,8 @@ options(sqlRenderTempEmulationSchema = NULL)
 
 # Details for connecting to the server:
 # See ?DatabaseConnector::createConnectionDetails for help
+
+
 connectionDetails <-
   DatabaseConnector::createConnectionDetails(dbms = "redshift",
                                              server = database$server, #paste0(Sys.getenv("DB_SERVER3"),"/optum_extended_ses"),
@@ -62,7 +64,7 @@ PediatricCharacterization::execute(connectionDetails = connectionDetails,
                                           databaseId = databaseId,
                                           databaseName = databaseName,
                                           createCohortsAndRef = TRUE,
-                                          runCohortDiagnostics = FALSE,
+                                          runCohortDiagnostics = TRUE,
                                           runIR = TRUE,
                                           minCellCount = 5)
 
@@ -93,7 +95,7 @@ CohortDiagnostics::createDiagnosticsExplorerZip(outputZipfile = file.path(folder
                                                                          "MergedCohortDiagnosticsData.sqlite"),
                                                 overwrite = T)
 
-CohortDiagnostics::launchDiagnosticsExplorer(overwritePublishDir = TRUE, makePublishable=TRUE,
+CohortDiagnostics::launchDiagnosticsExplorer(overwritePublishDir = TRUE, makePublishable=FALSE,
                                              sqliteDbPath = file.path(folder, "MergedCohortDiagnosticsData.sqlite"))
 
 
