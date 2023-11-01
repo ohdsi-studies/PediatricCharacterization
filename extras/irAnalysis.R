@@ -44,14 +44,14 @@ for (i in 1:length(cohortJsonFiles)) {
                                                        stringsAsFactors = FALSE))
 }
 
-#all persons at risk 2016-2022
-targets <- list(CohortIncidence::createCohortRef(id=14061, name="At risk, 2017+"),
+#all persons at risk 2017-2022
+targets <- list(CohortIncidence::createCohortRef(id=14061, name="At risk, 2017-2022"),
                 CohortIncidence::createCohortRef(id=14063, name="At risk, 2017"),
                 CohortIncidence::createCohortRef(id=14064, name="At risk, 2018"),
                 CohortIncidence::createCohortRef(id=14065, name="At risk, 2019"),
                 CohortIncidence::createCohortRef(id=14066, name="At risk, 2020"),
                 CohortIncidence::createCohortRef(id=14067, name="At risk, 2021"),
-                CohortIncidence::createCohortRef(id=14068, name="At risk, 2016+"));
+                CohortIncidence::createCohortRef(id=14068, name="At risk, 2022"));
 
 
 #
@@ -88,10 +88,10 @@ outcomes <- list(CohortIncidence::createOutcomeDef(id=1,name="Autism", cohortId=
 );
 
 
-tars <- list(CohortIncidence::createTimeAtRiskDef(id=2, startWith="start", endWith="start", endOffset = 365),
-             CohortIncidence::createTimeAtRiskDef(id=2, startWith="start", endWith="start", endOffset = 180),
+tars <- list(CohortIncidence::createTimeAtRiskDef(id=4, startWith="start", endWith="start", endOffset = 365),
+             CohortIncidence::createTimeAtRiskDef(id=3, startWith="start", endWith="start", endOffset = 180),
              CohortIncidence::createTimeAtRiskDef(id=2, startWith="start", endWith="start", endOffset = 90),
-             CohortIncidence::createTimeAtRiskDef(id=2, startWith="start", endWith="start", endOffset = 30)
+             CohortIncidence::createTimeAtRiskDef(id=1, startWith="start", endWith="start", endOffset = 30)
 
 );
 
@@ -121,7 +121,7 @@ readr::write_file(jsonlite::prettify(irDesign$asJSON(), indent=2), "inst/setting
 #this would go below into the loop that the DPs would run - above is a one time
 #everything above this line is in createJsonSpec.R file
 
-irDesign2 <-readr::read_file(file=file.path(packageRoot, 'irDesign.json') )
+irDesign2 <-readr::read_file(file=file.path(paste(packageRoot, '/inst/settings/', sep=""), 'irDesign.json') )
 test <- IncidenceDesign$new(data=irDesign2)
 
 
