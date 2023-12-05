@@ -1,11 +1,11 @@
 Package: PediatricCharacterization
 Type: Package
-Title: What the Package Does (Title Case)
+Title: CohortDiagnostics and CohortIncidence on 29 select pediatric phenotypes
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Jill Hardin
+Maintainer: Jill Hardin <jhardi10@its.jnj.com>
+Description: Understanding the incidence rates of phenotypes in pediatrics, this work will look at the rates of these phenotypes in pediatric and adult subjects.
+License: The PediatricCharacterization package is licensed under Apache License 2.0.
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.1.2

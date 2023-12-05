@@ -8,6 +8,8 @@ install.packages("renv")
 #download.file("https://raw.githubusercontent.com/ohdsi-studies/PediatricCharacterization/anaphylaxis/renv.lock", "renv.lock")
 download.file("https://raw.githubusercontent.com/ohdsi-studies/PediatricCharacterization/master/renv.lock", "renv.lock")
 renv::init()
+installed.packages() #gives list of all packages installed but do I really need all these n=171?
+
 renv::restore()
 library(PediatricCharacterization)
 
@@ -20,7 +22,7 @@ projectName = 'PediatricCharacterization'
 databases <- read.csv(file.path(packageRoot, "XX_databases.csv"))
 # CohortDiagnostics::preMergeDiagnosticsFiles(file.path(outputFolder, "cohortDiagnostics"))
 #databases <- read.csv("XX_databases.csv",header=TRUE)
-database <- databases[3,]
+database <- databases[3,] #may wish to change this
 #DONE:  #1,2,3
 
 # --- RUN ----------------------------------------------------------------------
@@ -167,3 +169,5 @@ CohortDiagnostics::launchDiagnosticsExplorer(overwritePublishDir = TRUE, makePub
 # }
 #
 #
+
+
